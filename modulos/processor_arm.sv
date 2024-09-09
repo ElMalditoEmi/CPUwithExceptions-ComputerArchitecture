@@ -6,7 +6,7 @@ module processor_arm #(parameter N = 64)
 					   output logic [N-1:0] DM_writeData, DM_addr,
 					   output logic DM_writeEnable,
 					   output logic ExtIAck,
-					   input	logic dump);
+					   input  logic dump);
 
 	logic [31:0] q;
 	logic [3:0] AluControl;

@@ -6,10 +6,17 @@ module processor_tb();
 	logic        	CLOCK_50, reset;
 	logic        	DM_writeEnable;
 	logic [N-1:0] 	DM_writeData, DM_addr;
+  logic         ExtIRQ;
 	logic 			dump;
   
   // instantiate device under test
-  processor_arm  dut (CLOCK_50, reset, DM_writeData, DM_addr, DM_writeEnable, dump);
+  processor_arm  dut (.CLOCK_50(CLOCK_50),
+                      .reset(reset),
+                      .ExtIRQ(ExtIRQ),
+                      .DM_writeData(DM_writeData),
+                      .DM_addr(DM_addr),
+                      .DM_writeEnable(DM_writeEnable),
+                      .dump(dump));
     
   // generate clock
   always     // no sensitivity list, so it always executes
