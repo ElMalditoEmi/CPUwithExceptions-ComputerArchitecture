@@ -31,7 +31,8 @@ module controller(input logic [10:0] instr,
 							.MemRead(memRead), 
 							.MemWrite(memWrite), 
 							.Branch(Branch), 
-							.ALUOp(AluOp_s));	
+							.ALUOp(AluOp_s),
+							.ERet(ERet));
 					
 								
 	aludec 	decAlu 	(.funct(instr), 
