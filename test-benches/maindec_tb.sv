@@ -21,10 +21,18 @@ module maindec_tb();
     logic clk;
 
     logic [10:0]Op;
+    logic reset = 1'b0;
     logic Reg2Loc, ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch, ALUOp;
     logic expReg2Loc, expALUSrc, expMemtoReg, expRegWrite, expMemRead, expMemWrite, expBranch, expALUOp; // Expected values
 
-    maindec dut(Op,Reg2Loc,ALUSrc,MemtoReg,RegWrite, MemRead, MemWrite, Branch, ALUOp);
+    maindec dut( .Op(Op),
+	 .reset(reset),
+	 .Reg2Loc(Reg2Loc),
+	 .ALUSrc(ALUSrc),
+	 .MemtoReg(MemtoReg),
+	 .RegWrite(RegWrite), 
+	 .MemRead(MemRead),
+	 .MemWrite(MemWrite), .Branch(Branch), .ALUOp(ALUOp));
 
     logic [19:0]testcase;
     int test_n = 0;
@@ -52,9 +60,9 @@ module maindec_tb();
             $display("Expected: %b %b %b %b %b %b %b %b", expReg2Loc, expALUSrc, expMemtoReg, expRegWrite, expMemRead, expMemWrite, expBranch, expALUOp);
             $display("Got: %b %b %b %b %b %b %b %b", Reg2Loc, ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch, ALUOp);
         end
-        // else begin
-        //     $display("Test %d passed", test_n);
-        // end
+        else begin
+             $display("Test %d passed", test_n);
+        end
 
         #16; // Para que sea mas fácil mirar la gráfica
         test_n = test_n + 1;
