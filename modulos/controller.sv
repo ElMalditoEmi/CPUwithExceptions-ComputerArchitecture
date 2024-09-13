@@ -34,7 +34,7 @@ module controller(input logic [10:0] instr,
 							.ALUOp(AluOp_s),
 							.ERet(ERet),
 							.Exc(Exc),
-							.ExtIRQ
+							.ExtIRQ(ExtIRQ)
 							);
 					
 								

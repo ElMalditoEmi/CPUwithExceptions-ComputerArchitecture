@@ -28,7 +28,8 @@ module processor_tb();
   initial
     begin
       CLOCK_50 = 0; reset = 1; dump = 0;
-      #20 reset = 0;
+      #20 reset = 0; 
+		#20 ExtIRQ = 0;
       #500 dump = 1; 
 	   #20 $stop;
 	end 

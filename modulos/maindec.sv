@@ -132,7 +132,8 @@ module maindec(input logic [10:0]Op,
 			  NotAnInstr = 1;
 			  EStatus = 4'b0010;
 		  end
-		  Exc <= ExtIRQ | NotAnInstr;
     end
+	 
+	 assign Exc = ExtIRQ | NotAnInstr;
 
 endmodule
