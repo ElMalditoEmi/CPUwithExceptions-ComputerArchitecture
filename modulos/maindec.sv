@@ -9,13 +9,15 @@ module maindec(input logic [10:0]Op,
                                 Branch,
                 output logic [1:0]ALUOp,
 					 // Agregadas en el practico de excepciones
+					 input logic ExtIRQ,
+					 
                 output logic ERet,
 					 output logic NotAnInstr,
-					 output logic [3:0]EStatus
+					 output logic [3:0]EStatus,
+					 output logic Exc
                 );
 
     always_comb begin // Sensible al cambio de Op
-		  
 		  if (reset === 1'b1) begin
 			  Reg2Loc = 0;
 			  ALUSrc = 2'b0;
@@ -46,7 +48,7 @@ module maindec(input logic [10:0]Op,
 				EStatus = 4'b0;
         end
         else if (Op === 11'b111_1100_0010) begin // LDUR
-            Reg2Loc = 1'0; // Don't care
+            Reg2Loc = 1'b0; // Don't care
             ALUSrc = 2'b01;
             MemtoReg = 1;
             RegWrite = 1;
@@ -76,7 +78,7 @@ module maindec(input logic [10:0]Op,
         else if (Op === 11'b1101_011_0100) begin // ERET
             Reg2Loc = 0;
             ALUSrc = 2'b0;
-            MemtoReg = 1'b1;
+            MemtoReg = 1'b1;  // Don't care
             RegWrite = 0;
             MemRead = 0;
             MemWrite = 0;
@@ -89,7 +91,7 @@ module maindec(input logic [10:0]Op,
         end
 		  else if (Op === 11'b1101_010_1001) begin // MRS
             Reg2Loc = 1;
-            ALUSrc = 2'b1x;
+            ALUSrc = 2'b10;  // Don't care en el segundo bit
             MemtoReg = 1'b0;
             RegWrite = 1;
             MemRead = 0;
@@ -104,7 +106,7 @@ module maindec(input logic [10:0]Op,
         else if (Op[10:3] == 8'b101_1010_0) begin // CBZ
             Reg2Loc = 1;
             ALUSrc = 2'b0;
-            MemtoReg = 1'b1;
+            MemtoReg = 1'b1;  // Don't care
             RegWrite = 0;
             MemRead = 0;
             MemWrite = 0;
@@ -124,13 +126,13 @@ module maindec(input logic [10:0]Op,
 			  MemRead = 0;
 			  MemWrite = 0;
 			  Branch = 0;
-			  ALUOp = 2'bxx;
+			  ALUOp = 2'b11;
 			  
 			  ERet = 0;
 			  NotAnInstr = 1;
 			  EStatus = 4'b0010;
 		  end
+		  Exc <= ExtIRQ | NotAnInstr;
     end
-
 
 endmodule
