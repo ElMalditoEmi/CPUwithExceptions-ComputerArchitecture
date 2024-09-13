@@ -46,7 +46,7 @@ module maindec(input logic [10:0]Op,
 				EStatus = 4'b0;
         end
         else if (Op === 11'b111_1100_0010) begin // LDUR
-            Reg2Loc = 1'bx;
+            Reg2Loc = 1'0; // Don't care
             ALUSrc = 2'b01;
             MemtoReg = 1;
             RegWrite = 1;
@@ -62,7 +62,7 @@ module maindec(input logic [10:0]Op,
         else if (Op === 11'b111_1100_0000) begin // STUR
             Reg2Loc = 1;
             ALUSrc = 2'b01;
-            MemtoReg = 1'bx;
+            MemtoReg = 1'b1; // Don't care
             RegWrite = 0;
             MemRead = 0;
             MemWrite = 1;
@@ -76,7 +76,7 @@ module maindec(input logic [10:0]Op,
         else if (Op === 11'b1101_011_0100) begin // ERET
             Reg2Loc = 0;
             ALUSrc = 2'b0;
-            MemtoReg = 1'bx;
+            MemtoReg = 1'b1;
             RegWrite = 0;
             MemRead = 0;
             MemWrite = 0;
@@ -104,7 +104,7 @@ module maindec(input logic [10:0]Op,
         else if (Op[10:3] == 8'b101_1010_0) begin // CBZ
             Reg2Loc = 1;
             ALUSrc = 2'b0;
-            MemtoReg = 1'bx;
+            MemtoReg = 1'b1;
             RegWrite = 0;
             MemRead = 0;
             MemWrite = 0;
@@ -117,8 +117,8 @@ module maindec(input logic [10:0]Op,
         end
 		  else begin
 		  // El caso default por si ningún if unifica		  
-			  Reg2Loc = 1'bx;
-			  ALUSrc = 2'bxx;
+			  Reg2Loc = 1'b1;
+			  ALUSrc = 2'b11; // Don't care
 			  MemtoReg = 0;
 			  RegWrite = 0;
 			  MemRead = 0;
