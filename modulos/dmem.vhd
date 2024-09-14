@@ -61,7 +61,7 @@ architecture behave of dmem is
       while i <= MAX_BOUND-1 loop        
 		  write(dumpline, i);
 		  write(dumpline, string'(" "));
-		  write(dumpline, to_bitvector(mem(i)));		  
+		  -- write(dumpline, to_bitvector(mem(i)));		  
 		  writeline(dumpfile,dumpline);
         i:=i+1;
       end loop;
