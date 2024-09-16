@@ -91,7 +91,7 @@ module maindec(input logic [10:0]Op,
         end
 		  else if (Op === 11'b1101_010_1001) begin // MRS
             Reg2Loc = 1;
-            ALUSrc = 2'b10;  // Don't care en el segundo bit
+            ALUSrc = 2'b10;  // Don't care en el bit menos significativo
             MemtoReg = 1'b0;
             RegWrite = 1;
             MemRead = 0;
@@ -103,7 +103,7 @@ module maindec(input logic [10:0]Op,
 				NotAnInstr = 0;
 				EStatus = 4'b0;
         end
-        else if (Op[10:3] == 8'b101_1010_0) begin // CBZ
+        else if (Op[10:3] === 8'b101_1010_0) begin // CBZ
             Reg2Loc = 1;
             ALUSrc = 2'b0;
             MemtoReg = 1'b1;  // Don't care
@@ -117,7 +117,21 @@ module maindec(input logic [10:0]Op,
 				NotAnInstr = 0;
 				EStatus = 4'b0;
         end
-		  else begin
+		  else if (Op === 11'b110_1011_0000) begin
+		      Reg2Loc = 1;
+            ALUSrc = 2'b0;
+            MemtoReg = 1'b1;  // Don't care
+            RegWrite = 0;
+            MemRead = 0;
+            MemWrite = 0;
+            Branch = 1;
+            ALUOp = 2'b01;
+				
+				ERet = 0;
+				NotAnInstr = 0;
+				EStatus = 4'b0;
+		  end
+		  else begin // Invalid opcode
 		  // El caso default por si ningún if unifica		  
 			  Reg2Loc = 1'b1;
 			  ALUSrc = 2'b11; // Don't care
