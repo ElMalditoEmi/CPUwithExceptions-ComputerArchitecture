@@ -13,6 +13,7 @@ module controller(input logic [10:0] instr,
 						// - Hacia DP
 						output logic [3:0] EStatus,
 						output logic Exc, ERet,
+						output logic Branch_Uncond,
 						input logic ExcAck,
 
 						// - Hacia afuera
@@ -30,7 +31,8 @@ module controller(input logic [10:0] instr,
 							.RegWrite(regWrite), 
 							.MemRead(memRead), 
 							.MemWrite(memWrite), 
-							.Branch(Branch), 
+							.Branch(Branch),
+							.Branch_Uncond(Branch_Uncond),
 							.ALUOp(AluOp_s),
 							.ERet(ERet),
 							.Exc(Exc),

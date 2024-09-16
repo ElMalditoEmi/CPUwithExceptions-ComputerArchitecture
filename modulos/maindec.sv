@@ -7,6 +7,7 @@ module maindec(input logic [10:0]Op,
                                 MemRead,
                                 MemWrite,
                                 Branch,
+										  Branch_Uncond, // Branch unconditionally, just for BR instr
                 output logic [1:0]ALUOp,
 					 // Agregadas en el practico de excepciones
 					 input logic ExtIRQ,
@@ -26,6 +27,7 @@ module maindec(input logic [10:0]Op,
 			  MemRead = 0;
 			  MemWrite = 0;
 			  Branch = 0;
+			  Branch_Uncond = 0;
 			  ALUOp = 2'b00;
 			  
 			  ERet = 0;
@@ -41,6 +43,7 @@ module maindec(input logic [10:0]Op,
             MemRead = 0;
             MemWrite = 0;
             Branch = 0;
+				Branch_Uncond = 0;
             ALUOp = 2'b10;
 				
             ERet = 0;
@@ -55,6 +58,7 @@ module maindec(input logic [10:0]Op,
             MemRead = 1;
             MemWrite = 0;
             Branch = 0;
+				Branch_Uncond = 0;
             ALUOp = 2'b00;
 				
             ERet = 0;
@@ -69,6 +73,7 @@ module maindec(input logic [10:0]Op,
             MemRead = 0;
             MemWrite = 1;
             Branch = 0;
+				Branch_Uncond = 0;
             ALUOp = 2'b00;
 				
             ERet = 0;
@@ -83,6 +88,7 @@ module maindec(input logic [10:0]Op,
             MemRead = 0;
             MemWrite = 0;
             Branch = 1;
+				Branch_Uncond = 0;
             ALUOp = 2'b01;
             
             ERet = 1; // No deberia suceder que setear ERet.
@@ -97,6 +103,7 @@ module maindec(input logic [10:0]Op,
             MemRead = 0;
             MemWrite = 0;
             Branch = 0;
+				Branch_Uncond = 0;
             ALUOp = 2'b01;
             
             ERet = 0; // No deberia suceder que setear ERet.
@@ -111,13 +118,14 @@ module maindec(input logic [10:0]Op,
             MemRead = 0;
             MemWrite = 0;
             Branch = 1;
+				Branch_Uncond = 0;
             ALUOp = 2'b01;
 				
             ERet = 0;
 				NotAnInstr = 0;
 				EStatus = 4'b0;
         end
-		  else if (Op === 11'b110_1011_0000) begin
+		  else if (Op === 11'b110_1011_0000) begin // BR
 		      Reg2Loc = 1;
             ALUSrc = 2'b0;
             MemtoReg = 1'b1;  // Don't care
@@ -125,6 +133,7 @@ module maindec(input logic [10:0]Op,
             MemRead = 0;
             MemWrite = 0;
             Branch = 1;
+				Branch_Uncond = 1;
             ALUOp = 2'b01;
 				
 				ERet = 0;
@@ -140,6 +149,7 @@ module maindec(input logic [10:0]Op,
 			  MemRead = 0;
 			  MemWrite = 0;
 			  Branch = 0;
+           Branch_Uncond = 0;
 			  ALUOp = 2'b11;
 			  
 			  ERet = 0;

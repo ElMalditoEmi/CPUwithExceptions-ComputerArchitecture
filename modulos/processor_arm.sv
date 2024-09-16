@@ -12,7 +12,7 @@ module processor_arm #(parameter N = 64)
 	logic [3:0] AluControl;
 	logic reg2loc, regWrite, memtoReg, memRead, memWrite;
 	logic [1:0] AluSrc;
-	logic Exc, ExcAck, ERet, Branch;
+	logic Exc, ExcAck, ERet, Branch, Branch_Uncond;
 	logic [3:0] EStatus;
 	logic [N-1:0] DM_readData, IM_address; //DM_addr, DM_writeData
 	logic DM_readEnable; //DM_writeEnable
@@ -26,6 +26,7 @@ module processor_arm #(parameter N = 64)
 						.regWrite(regWrite),
 						.AluSrc(AluSrc),
 						.Branch(Branch),
+						.Branch_Uncond(Branch_Uncond), // As output
 						.memtoReg(memtoReg),
 						.memRead(memRead),
 						.memWrite(memWrite),						
@@ -41,6 +42,7 @@ module processor_arm #(parameter N = 64)
 						.AluSrc(AluSrc),
 						.AluControl(AluControl),
 						.Branch(Branch),
+						.Branch_Uncond(Branch_Uncond), // As input
 						.memRead(memRead),
 						.memWrite(memWrite),
 						.regWrite(regWrite),						

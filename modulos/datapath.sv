@@ -6,6 +6,7 @@ module datapath #(parameter N = 64)
 				  input logic [1:0] AluSrc,
 				  input logic [3:0] AluControl,
 				  input logic Branch,
+				  input logic Branch_Uncond,
 				  input logic memRead,
 				  input logic memWrite,
 				  input logic regWrite,
@@ -61,6 +62,7 @@ module datapath #(parameter N = 64)
 								.zero_E(zero));
 
 	memory  		MEMORY     (.Branch_M(Branch),
+								.Branch_Uncond(Branch_Uncond),
 								.zero_M(zero),
 								.PCSrc_M(PCSrc));
 
