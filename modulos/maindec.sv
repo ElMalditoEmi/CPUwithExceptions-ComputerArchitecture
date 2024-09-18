@@ -11,14 +11,31 @@ module maindec(input logic [10:0]Op,
                 output logic [1:0]ALUOp,
 					 // Agregadas en el practico de excepciones
 					 input logic ExtIRQ,
-					 
-                output logic ERet,
 					 output logic NotAnInstr,
+                output logic ERet,
 					 output logic [3:0]EStatus,
 					 output logic Exc
                 );
+					 
+
 
     always_comb begin // Sensible al cambio de Op
+	 
+			  // El caso default por si ningún if unifica		  
+		  Reg2Loc = 1'b1;
+		  ALUSrc = 2'b11; // Don't care
+		  MemtoReg = 0;
+		  RegWrite = 0;
+		  MemRead = 0;
+		  MemWrite = 0;
+		  Branch = 0;
+		  Branch_Uncond = 0;
+		  ALUOp = 2'b11;
+		  
+		  ERet = 0;
+		  NotAnInstr = 1;
+		  EStatus = 4'b0010;
+			  
 		  if (reset === 1'b1) begin
 			  Reg2Loc = 0;
 			  ALUSrc = 2'b0;
@@ -140,28 +157,13 @@ module maindec(input logic [10:0]Op,
 				NotAnInstr = 0;
 				EStatus = 4'b0;
 		  end
-		  else begin // Invalid opcode
-		  // El caso default por si ningún if unifica		  
-			  Reg2Loc = 1'b1;
-			  ALUSrc = 2'b11; // Don't care
-			  MemtoReg = 0;
-			  RegWrite = 0;
-			  MemRead = 0;
-			  MemWrite = 0;
-			  Branch = 0;
-           Branch_Uncond = 0;
-			  ALUOp = 2'b11;
-			  
-			  ERet = 0;
-			  NotAnInstr = 1;
-			  EStatus = 4'b0010;
-		  end
 		  
 		  if (ExtIRQ === 1) begin
 			  EStatus = 4'b0001;
 		  end
 		  
-		  Exc = ExtIRQ | NotAnInstr;
+		  Exc = (ExtIRQ | NotAnInstr);
     end
+
 
 endmodule
