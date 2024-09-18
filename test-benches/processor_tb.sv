@@ -30,7 +30,7 @@ module processor_tb();
       CLOCK_50 = 0; reset = 1; dump = 0;
 		ExtIRQ = 0;
       #20 reset = 0; 
-		#21 ExtIRQ = 1;
+		#200 ExtIRQ = 1;
 		#2 ExtIRQ = 0;
       #500 dump = 1; 
 	   #20 $stop;

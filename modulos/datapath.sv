@@ -57,6 +57,7 @@ module datapath #(parameter N = 64)
 								.readData2_E(readData2),
 								.readData3_E(readData3),
 								.PCBranch_E(E_Branch),
+								.RegBranching(Branch_Uncond),
 								.aluResult_E(DM_addr),
 								.writeData_E(DM_writeData),
 								.zero_E(zero));
